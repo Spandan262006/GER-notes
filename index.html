@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GER Study Guide — AceDBE</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F2EDE4;--sb:#1C3329;--sb2:#243D30;--sa:#4E9068;--sw:#C8D8C2;--card:#FFFFFF;--text:#2A2A2A;--muted:#6B7280;--con-bg:#EBF5EB;--con-bd:#4CAF50;--form-bg:#FFF8E1;--form-bd:#F59E0B;--tip-bg:#EEE8FF;--tip-bd:#7C3AED;--warn-bg:#FFF0F0;--warn-bd:#EF4444;--ex-bg:#F4F6FA;--ex-bd:#94A3B8;--shadow:0 2px 14px rgba(0,0,0,0.07);}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);display:flex;min-height:100vh;font-size:15px;}
+/* SIDEBAR */
+.sb{width:272px;min-height:100vh;background:var(--sb);position:fixed;top:0;left:0;overflow-y:auto;z-index:100;transition:transform .3s ease;display:flex;flex-direction:column;}
+.sb-head{padding:24px 20px 16px;border-bottom:1px solid rgba(255,255,255,0.07);}
+.sb-head h1{font-family:'Playfair Display',serif;font-size:1.05rem;color:#fff;line-height:1.3;}
+.sb-head p{color:var(--sw);font-size:0.72rem;margin-top:3px;opacity:.6;}
+.sb-prog{height:3px;background:rgba(255,255,255,0.08);margin:10px 20px;border-radius:2px;}
+.sb-prog-fill{height:100%;background:var(--sa);border-radius:2px;transition:width .5s ease;width:12.5%;}
+.sb-nav{padding:8px 0;flex:1;}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 20px;cursor:pointer;border-left:3px solid transparent;transition:all .2s;}
+.nav-item:hover{background:rgba(255,255,255,0.05);border-left-color:rgba(255,255,255,0.2);}
+.nav-item.active{background:rgba(78,144,104,0.18);border-left-color:var(--sa);}
+.nav-em{font-size:1.1rem;width:26px;text-align:center;flex-shrink:0;}
+.nav-tx .nb{font-size:.65rem;color:var(--sw);opacity:.45;text-transform:uppercase;letter-spacing:.05em;}
+.nav-tx .nt{font-size:.78rem;color:var(--sw);font-weight:600;line-height:1.3;}
+.nav-item.active .nt{color:#fff;}
+/* MAIN */
+.main{margin-left:272px;flex:1;padding:40px 44px;max-width:900px;}
+/* MODULE HEADER */
+.mod-head{margin-bottom:32px;}
+.mod-tag{display:inline-flex;align-items:center;gap:6px;background:var(--sa);color:white;padding:3px 12px;border-radius:20px;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;}
+.mod-head h2{font-family:'Playfair Display',serif;font-size:2rem;color:#1C3329;line-height:1.2;margin-bottom:6px;}
+.mod-head .sub{color:var(--muted);font-size:.95rem;line-height:1.6;max-width:580px;}
+/* ACCORDION */
+.acc{background:var(--card);border-radius:14px;margin-bottom:18px;box-shadow:var(--shadow);overflow:hidden;}
+.acc-hd{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;cursor:pointer;user-select:none;}
+.acc-hd:hover{background:rgba(0,0,0,0.012);}
+.acc-hd.open{border-bottom:1.5px solid #EDEDED;}
+.acc-title{font-family:'Playfair Display',serif;font-size:1.05rem;color:#1C3329;font-weight:600;}
+.acc-arr{color:var(--muted);font-size:.9rem;transition:transform .3s;display:inline-block;}
+.acc-arr.open{transform:rotate(180deg);}
+.acc-body{display:none;padding:22px;}
+.acc-body.open{display:block;}
+/* CONTENT BLOCKS */
+.intro{font-size:.92rem;line-height:1.8;color:#3A3A3A;margin-bottom:16px;}
+.con-box,.form-box,.tip-box,.warn-box,.ex-box{border-radius:0 10px 10px 0;padding:14px 18px;margin:14px 0;}
+.con-box{background:var(--con-bg);border-left:4px solid var(--con-bd);}
+.form-box{background:var(--form-bg);border-left:4px solid var(--form-bd);}
+.tip-box{background:var(--tip-bg);border-left:4px solid var(--tip-bd);}
+.warn-box{background:var(--warn-bg);border-left:4px solid var(--warn-bd);}
+.ex-box{background:var(--ex-bg);border-left:4px solid var(--ex-bd);}
+.box-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px;}
+.con-box .box-label{color:#1B5E20;}
+.form-box .box-label{color:#92400E;}
+.tip-box .box-label{color:#5B21B6;}
+.warn-box .box-label{color:#991B1B;}
+.ex-box .box-label{color:#475569;}
+.box-text{font-size:.88rem;line-height:1.7;color:#333;}
+.form-box .box-text{font-size:.9rem;}
+.formula{font-size:.95rem;background:rgba(0,0,0,0.05);padding:8px 14px;border-radius:7px;margin:6px 0;color:#7C2D12;font-weight:600;}
+.blist{list-style:none;padding:0;}
+.blist li{display:flex;gap:9px;margin-bottom:9px;font-size:.88rem;line-height:1.65;}
+.blist li:last-child{margin-bottom:0;}
+.blist li::before{content:"›";color:var(--con-bd);font-weight:700;flex-shrink:0;font-size:1.1rem;margin-top:-1px;}
+.tip-box .blist li::before{color:var(--tip-bd);}
+.subsec{font-family:'Playfair Display',serif;font-size:.95rem;color:#1C3329;margin:18px 0 8px;font-weight:600;}
+/* STEPS */
+.steps{list-style:none;counter-reset:s;margin:10px 0;}
+.steps li{counter-increment:s;display:flex;gap:12px;margin-bottom:10px;font-size:.88rem;line-height:1.65;}
+.steps li::before{content:counter(s);background:var(--sa);color:#fff;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;flex-shrink:0;margin-top:2px;}
+/* TABLE */
+.dtable{width:100%;border-collapse:collapse;margin:14px 0;border-radius:10px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.07);font-size:.84rem;}
+.dtable th{background:#1C3329;color:#fff;padding:10px 14px;text-align:left;font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;}
+.dtable td{padding:10px 14px;border-bottom:1px solid #F0F0F0;color:#3A3A3A;line-height:1.5;}
+.dtable tr:last-child td{border-bottom:none;}
+.dtable tr:nth-child(even) td{background:#FAFAFA;}
+/* QUICK REVIEW */
+.qr{background:linear-gradient(135deg,#1C3329,#2D5040);border-radius:12px;padding:18px 22px;margin-top:20px;}
+.qr h4{color:#A8D5B8;font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;font-weight:700;}
+.qr ul{list-style:none;}
+.qr li{color:#E8F5E9;font-size:.84rem;padding:4px 0;display:flex;gap:8px;line-height:1.5;}
+.qr li::before{content:"→";color:#5C9E78;font-weight:700;flex-shrink:0;}
+/* DIVIDER */
+.div{height:1px;background:#EDEDE8;margin:16px 0;}
+/* CHIPS */
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0;}
+.chip{background:#EBF5EB;color:#1B5E20;padding:3px 10px;border-radius:20px;font-size:.74rem;font-weight:600;}
+/* MOBILE */
+.mob-btn{display:none;position:fixed;top:14px;left:14px;z-index:200;background:var(--sb);color:#fff;border:none;padding:9px 14px;border-radius:9px;cursor:pointer;font-size:1.1rem;}
+@media(max-width:768px){.sb{transform:translateX(-100%)}.sb.open{transform:translateX(0)}.main{margin-left:0;padding:18px;padding-top:56px;}.mob-btn{display:block;}.mod-head h2{font-size:1.55rem;}}
+b{font-weight:700;}
+</style>
+</head>
+<body>
+<button class="mob-btn" onclick="toggleSB()" id="mBtn">☰</button>
+<aside class="sb" id="sb">
+  <div class="sb-head">
+    <h1>🌿 Generating Entrepreneur Resources</h1>
+    <p>Simplified Study Guide · AceDBE · IIMB BBA DBE</p>
+  </div>
+  <div class="sb-prog"><div class="sb-prog-fill" id="progFill"></div></div>
+  <nav class="sb-nav" id="sbNav"></nav>
+</aside>
+<main class="main" id="mainArea"></main>
+
+<script>
+const MODULES = [
+{id:1,emoji:"🌱",title:"Foundations of Entrepreneurial Finance",subtitle:"Why startups need money, what types of businesses exist, and how equity actually works",color:"#5C9E78",
+sections:[
+{title:"Why Do Entrepreneurs Start Businesses?",content:`
+<p class="intro">Before a startup can raise money, it helps to understand <b>why</b> someone started it in the first place. The motivation directly shapes the financial strategy — how much to raise, from whom, and on what terms.</p>
+<div class="con-box"><div class="box-label">💡 The 5 Entrepreneurial Motives</div>
+<ul class="blist">
+<li><b>Service to Society</b> — Solving real problems like financial inclusion or affordable healthcare. Think NGOs or social enterprises.</li>
+<li><b>Livelihood</b> — Simply earning a steady income. Example: a small kirana (grocery) store.</li>
+<li><b>Lifestyle</b> — Experienced professionals wanting a profitable but low-stress business. Example: a boutique consulting firm.</li>
+<li><b>Profit / ROI</b> — Maximum returns for founders and investors. This is where venture capital comes in.</li>
+<li><b>Self-Actualization</b> — Driven by passion or purpose, not money. Think artists or hobby entrepreneurs.</li>
+</ul></div>
+<div class="tip-box"><div class="box-label">🎯 Why this matters</div><p class="box-text">A "Profit/ROI" business will actively seek VC funding and tolerate dilution. A "Lifestyle" business may prefer bootstrapping. Your motive = your funding strategy.</p></div>
+`},
+{title:"What Does the Finance Function Actually Do?",content:`
+<p class="intro">Finance isn't just about raising money. In a startup, the finance team handles six critical jobs:</p>
+<div class="con-box"><div class="box-label">📋 The 6 Roles of Finance in a Startup</div>
+<ul class="blist">
+<li><b>Organizational Sustainability</b> — Making sure the company has enough cash to stay alive at every stage.</li>
+<li><b>Investor Relations</b> — Keeping investors happy, informed, and satisfied with how their money is being used.</li>
+<li><b>Performance Measurement</b> — Building and tracking business metrics (like monthly revenue, burn rate, customer acquisition cost).</li>
+<li><b>Communication</b> — Sharing accurate performance data with investors, management, and key employees.</li>
+<li><b>Incentivization</b> — Designing stock options (ESOPs) and bonuses so employees, vendors, and management stay motivated.</li>
+</ul></div>
+<div class="tip-box"><div class="box-label">💡 Key Idea</div><p class="box-text">Entrepreneurs themselves contribute <b>intellectual capital</b> (ideas, expertise, hard work) and often give up high-paying jobs. This is a form of capital too!</p></div>
+`},
+{title:"How Startups Grow: The 3 Phases",content:`
+<p class="intro">Startups don't just grow randomly. They plan development in phases to use money wisely and reduce risk. Think of it like building a house — first foundation, then walls, then roof.</p>
+<div class="con-box"><div class="box-label">📈 The 3 Development Phases</div>
+<ul class="blist">
+<li><b>Phase 1 — Product Development & Testing:</b> Build the product, do limited sales, ensure it actually works reliably.</li>
+<li><b>Phase 2 — Early Commercialization:</b> Figure out who your customer is (B2B? B2C?), optimize costs, and build your team.</li>
+<li><b>Phase 3 — Business Expansion:</b> Scale fast — new geographies, new customer segments, larger operations.</li>
+</ul></div>
+<div class="tip-box"><div class="box-label">🎯 Why Phase by Phase?</div>
+<ul class="blist">
+<li>Keeps founders focused on one thing at a time</li>
+<li>Reduces how much cash you burn early</li>
+<li>Limits how much equity you have to give away</li>
+<li>Builds investor confidence as you prove yourself</li>
+</ul></div>
+`},
+{title:"The Risks Startups Face",content:`
+<p class="intro">Startups are risky — that's why investors demand high returns. Here are the major risks, and also why startups still have advantages.</p>
+<div class="con-box"><div class="box-label">⚠️ 6 Types of Startup Risk</div>
+<ul class="blist">
+<li><b>Technology Risk</b> — The core tech (new drug, new battery) might simply not work.</li>
+<li><b>Customer Acceptance Risk</b> — Even if the tech works, customers might reject it.</li>
+<li><b>Incomplete Team Risk</b> — Great engineers but no sales or operations person.</li>
+<li><b>Resource Scarcity</b> — No factory, no supply chain, no marketing infrastructure.</li>
+<li><b>Regulatory Risk</b> — Government changes rules (e.g., ride-hailing laws, fintech regulations).</li>
+<li><b>Financial Forecasting Risk</b> — 30% of early VC investors don't even use financial forecasts! They invest on market potential alone.</li>
+</ul></div>
+<table class="dtable"><thead><tr><th>Feature</th><th>Startup Advantage</th><th>Startup Vulnerability</th></tr></thead>
+<tbody>
+<tr><td>Market Position</td><td>Highly innovative, competitive edge</td><td>Very small, high failure rate</td></tr>
+<tr><td>Growth</td><td>High growth potential, fast decisions</td><td>Lacks maturity and age</td></tr>
+<tr><td>Market Entry</td><td>Can adopt best practices easily</td><td>Novelty can scare customers away</td></tr>
+<tr><td>Capital</td><td>Lean structure, easy to pivot</td><td>Highly vulnerable to cash dry-ups</td></tr>
+</tbody></table>
+`},
+{title:"What Type of Business Gets What Funding?",content:`
+<p class="intro">Not every business is suited for venture capital. There's a simple 2x2 grid based on how <b>novel</b> your idea is and how <b>capital-intensive</b> your business is.</p>
+<table class="dtable"><thead><tr><th>Type</th><th>Novelty</th><th>Capital Needed</th><th>Funded By</th></tr></thead>
+<tbody>
+<tr><td>Kirana Store / Restaurant</td><td>Low</td><td>Low</td><td>Personal savings, bank loans</td></tr>
+<tr><td>Auto Parts Manufacturing</td><td>Low</td><td>High</td><td>Heavy debt, bank syndicates</td></tr>
+<tr><td>Space Tech / Drug Research</td><td>High</td><td>Very High</td><td>Hard to fund — "Valley of Death"</td></tr>
+<tr><td>App / E-commerce / Devices</td><td>High</td><td>Medium</td><td>⭐ Venture Capital & Angel Investors</td></tr>
+</tbody></table>
+<div class="tip-box"><div class="box-label">🎯 The VC Sweet Spot</div><p class="box-text">VCs love businesses that are <b>highly novel but don't need billions to start</b> — think apps, medical devices, aggregators, SaaS. These can scale massively without requiring a factory on day one.</p></div>
+<div class="warn-box"><div class="box-label">⚠️ Valley of Death</div><p class="box-text">High-novelty, high-capital businesses (like new drug molecules or space rockets) face a "Valley of Death" — they need massive investment before they can earn a single rupee. Very few investors touch these early.</p></div>
+`},
+{title:"Debt vs Equity vs Hybrids — The Basics",content:`
+<p class="intro">There are three main ways to fund a business. Understanding the difference is fundamental.</p>
+<div class="con-box"><div class="box-label">📦 Three Funding Instruments</div>
+<ul class="blist">
+<li><b>Debt (Loans):</b> You borrow money and <i>legally promise</i> to repay with interest — regardless of whether your business is profitable. If you default, the lender can seize your assets. Very risky for early startups.</li>
+<li><b>Equity (Share Capital):</b> Also called "Risk Capital" or "Patient Capital." Investors get a share of your company. They share your wins AND your losses. No mandatory repayment. This is what VC is.</li>
+<li><b>Hybrid Instruments:</b> Mix of both. Example: Preference Shares — they have a fixed dividend rate (like debt) but can also convert into equity shares.</li>
+</ul></div>
+<div class="con-box"><div class="box-label">📌 Key Properties of Equity</div>
+<ul class="blist">
+<li><b>Discretionary Returns:</b> Dividends are paid from profit at the board's discretion — NOT guaranteed.</li>
+<li><b>Lumpy Capital:</b> Unlike loans (precise amounts), equity is raised in large rounds.</li>
+<li><b>Cash Flow Rights:</b> Your proportional share of the company's financial value.</li>
+<li><b>Control Rights:</b> Voting rights on major decisions — proportional to your ownership.</li>
+</ul></div>
+`},
+{title:"Capital Terms You Must Know",content:`
+<p class="intro">When a company issues shares, there's a hierarchy of amounts. Here are the key terms with simple definitions:</p>
+<table class="dtable"><thead><tr><th>Term</th><th>Simple Definition</th></tr></thead>
+<tbody>
+<tr><td><b>Authorized Capital</b></td><td>Maximum shares the company is <i>legally allowed</i> to issue (stated in the Memorandum of Association).</td></tr>
+<tr><td><b>Issued Capital</b></td><td>Shares the company actually <i>offers to sell</i>.</td></tr>
+<tr><td><b>Subscribed Capital</b></td><td>Shares investors <i>commit to buying</i>.</td></tr>
+<tr><td><b>Paid-up Capital</b></td><td>Shares investors have actually <i>paid for</i>. This is the real money in.</td></tr>
+<tr><td><b>Face Value (Nominal Value)</b></td><td>Minimum price per share under Indian law (multiple of ₹1). Used for dividend calculations.</td></tr>
+</tbody></table>
+<div class="form-box"><div class="box-label">📐 Must-Know Formulas</div>
+<div class="formula">Net Worth (Book Equity) = Equity Share Capital + Reserves & Surplus</div>
+<div class="formula">Book Value per Share = Net Worth ÷ Number of Outstanding Shares</div>
+<div class="formula">Market Capitalization = Total Outstanding Shares × Market Price per Share</div>
+</div>
+`},
+{title:"Where Does Startup Money Come From?",content:`
+<p class="intro">Startups raise money in stages — different investors show up at different points in the journey. Think of it like a relay race, where a new runner (investor) takes the baton at each stage.</p>
+<table class="dtable"><thead><tr><th>Stage</th><th>Who Funds It</th><th>What It's For</th></tr></thead>
+<tbody>
+<tr><td>Idea & Proof of Concept</td><td>3 Fs (Founders, Family, Friends) + Govt Grants</td><td>Build the first version</td></tr>
+<tr><td>Beta & Early Revenue</td><td>Incubators, Accelerators, Angel Investors</td><td>Test and validate the model</td></tr>
+<tr><td>Early & Late Growth</td><td>Institutional VCs, Private Equity</td><td>Scale fast</td></tr>
+<tr><td>Maturity & Liquidity</td><td>Public Markets (IPO on Stock Exchange)</td><td>Massive capital + investor exit</td></tr>
+</tbody></table>
+<div class="con-box"><div class="box-label">👼 Angel Investors & Networks</div>
+<ul class="blist">
+<li><b>Angel Investors:</b> High-net-worth individuals investing ₹20L–₹5Cr of personal money. They often want to mentor the startup too.</li>
+<li><b>Angel Networks:</b> Groups of angels pooling money together. Benefits: risk diversification, shared costs, access to multi-industry expertise. Each angel can choose which deals to opt-in on.</li>
+</ul></div>
+<div class="warn-box"><div class="box-label">⚠️ The 3 Fs Problem</div><p class="box-text">Friends, Family, and Founders provide early capital but can be problematic — they lack business discipline, can't mentor you, sometimes demand their money back like a fixed deposit, and clutter your cap table with too many small shareholders.</p></div>
+`}
+]},
+{id:2,emoji:"💰",title:"Startup Valuation & Investment Framework",subtitle:"How investors decide what your startup is worth — and the math behind it",color:"#6B7FA0",
+sections:[
+{title:"Early-Stage vs Mature Business Valuation",content:`
+<p class="intro">Valuing a startup is very different from valuing an established company like Infosys or HDFC Bank. The key difference is <b>available data</b>.</p>
+<table class="dtable"><thead><tr><th>Parameter</th><th>Mature Company</th><th>Early-Stage Startup</th></tr></thead>
+<tbody>
+<tr><td>Operating History</td><td>Years of data; stable ratios</td><td>Little to none</td></tr>
+<tr><td>Data Availability</td><td>High — audited financials</td><td>Low — mostly projections</td></tr>
+<tr><td>Regulation</td><td>SEBI-regulated, heavy disclosure</td><td>Minimal, internal only</td></tr>
+<tr><td>Valuation Driver</td><td>DCF, historical profits, stock price</td><td>Investor mood, sector trends, capital availability</td></tr>
+</tbody></table>
+<div class="tip-box"><div class="box-label">💡 Real Talk</div><p class="box-text">In the AI boom of 2024-25, AI startups got sky-high valuations just because investors <i>wanted</i> to be in AI — not because the financials were proven. Valuation at early stages is partly subjective.</p></div>
+`},
+{title:"P/E and P/B Ratios — The Market Multiples",content:`
+<p class="intro">These are the most common ways to compare companies in the same industry. Think of them as a "price tag per unit of financial performance."</p>
+<div class="form-box"><div class="box-label">📐 The Ratios</div>
+<div class="formula">EPS (Earnings Per Share) = Profit After Tax ÷ Number of Equity Shares</div>
+<div class="formula">P/E Ratio = Current Market Price per Share ÷ EPS</div>
+<div class="formula">P/B Ratio = Current Market Price per Share ÷ Book Value per Share</div>
+<div class="formula">Book Value per Share = Net Worth ÷ Outstanding Shares</div>
+</div>
+<div class="ex-box"><div class="box-label">📖 Simple Example</div><p class="box-text">If a stock trades at ₹500 and earns ₹25 per share, P/E = 20x. This means investors pay ₹20 for every ₹1 of profit. Companies in the same sector cluster around similar P/E multiples — e.g., private banks cluster around 20-25x P/E.</p></div>
+<div class="con-box"><div class="box-label">📌 Why Higher P/E?</div>
+<ul class="blist">
+<li>Higher growth prospects → investors pay more → higher P/E</li>
+<li>Higher profitability → higher P/E</li>
+<li>Private banks > public sector banks in P/E because they have higher margins and no social obligations</li>
+</ul></div>
+`},
+{title:"Valuing Unprofitable Startups: EV Multiples",content:`
+<p class="intro">What if a startup has no profits (or even negative EBITDA)? You can't use P/E. So investors use <b>Enterprise Value</b> multiples instead.</p>
+<div class="con-box"><div class="box-label">📌 Key Definitions</div>
+<ul class="blist">
+<li><b>Enterprise Value (EV):</b> Total value of the company including all assets (think of it as what you'd pay to buy the entire company, including its debts).</li>
+<li><b>EBITDA:</b> Earnings Before Interest, Tax, Depreciation & Amortization. A proxy for operating profit.</li>
+<li><b>EV/EBITDA:</b> Used when the company is slightly profitable. Better than P/E because it ignores different debt levels.</li>
+<li><b>EV/Sales:</b> Used when even EBITDA is negative. Just values the startup on its revenue.</li>
+</ul></div>
+<div class="form-box"><div class="box-label">📐 EV Formulas</div>
+<div class="formula">EV/EBITDA Ratio = Enterprise Value ÷ EBITDA</div>
+<div class="formula">EV/Sales Ratio = Enterprise Value ÷ Revenue</div>
+<div class="formula">Equity Value = Enterprise Value − Liabilities (Debt + Preference Shares)</div>
+</div>
+<div class="tip-box"><div class="box-label">🎯 How to Value a Startup (Comparables Method)</div>
+<ol class="steps">
+<li>Find comparable listed or recently-funded companies in your sector.</li>
+<li>Calculate the average industry multiple (e.g., average EV/Sales = 5x).</li>
+<li>Forecast your startup's revenue for the exit year.</li>
+<li>Multiply: ₹X revenue × 5x = Estimated Company Value.</li>
+</ol></div>
+`},
+{title:"Unit Economics — Is Your Business Fundamentally Healthy?",content:`
+<p class="intro">Unit economics answers the most basic question: <b>Do you make money on each individual sale/customer?</b> It's the heartbeat of your business model.</p>
+<div class="con-box"><div class="box-label">📌 Key Unit Economics Concepts</div>
+<ul class="blist">
+<li><b>Cash Burn:</b> When your payments exceed your receipts every month. Early startups expect negative EBITDA — funded by equity.</li>
+<li><b>Customer Acquisition Cost (CAC):</b> How much you spend to win one customer.</li>
+<li><b>Customer Lifetime Value (LTV):</b> How much revenue that customer brings over their entire relationship with you.</li>
+<li><b>The Golden Rule:</b> LTV must be greater than CAC. If you spend ₹1000 to acquire a customer who only pays ₹500 ever, you lose money on every sale.</li>
+<li><b>Contribution Margin:</b> Revenue minus variable costs per unit. Proves the product can be profitable at scale.</li>
+</ul></div>
+<div class="tip-box"><div class="box-label">💡 Investor Lens</div><p class="box-text">VCs don't panic about early losses — they expect them. What they're checking is: "Will this become profitable as it scales?" Strong unit economics = yes. Weak unit economics = the business model is broken.</p></div>
+`},
+{title:"Dilution — What Happens When You Raise Money",content:`
+<p class="intro">When a startup raises external equity, it creates <b>new shares</b> and gives them to the investor. The founder's percentage goes down — this is called <b>dilution</b>.</p>
+<div class="ex-box"><div class="box-label">📖 Simple Example</div><p class="box-text">You own 100% of 1,000 shares. You raise money and issue 200 new shares to an investor. Now there are 1,200 shares total. You own 1,000/1,200 = <b>83.3%</b>. Your percentage dropped from 100% to 83.3% — but the total company value grew, so your shares are worth more in absolute terms.</p></div>
+<div class="form-box"><div class="box-label">📐 Pre & Post Money Valuation</div>
+<div class="formula">Post-Money Valuation = Investment Amount ÷ Equity % Acquired</div>
+<div class="formula">Pre-Money Valuation = Post-Money Valuation − Investment Amount</div>
+<div class="formula">Entry Equity % = Target Exit Equity % ÷ (1 − Future Dilution %)</div>
+</div>
+<div class="ex-box"><div class="box-label">📖 Example</div><p class="box-text">Investor puts in ₹2 Crore for 20% stake. Post-Money = ₹2Cr ÷ 0.20 = ₹10 Crore. Pre-Money = ₹10Cr − ₹2Cr = ₹8 Crore. The startup was worth ₹8Cr <i>before</i> the investment.</p></div>
+<div class="tip-box"><div class="box-label">📈 Why Growing Pre-Money is Good News</div><p class="box-text">If Round 1 pre-money = ₹5Cr and Round 2 pre-money = ₹25Cr, that's powerful market validation that the startup has grown 5x in value. Each round's pre-money signals progress.</p></div>
+`},
+{title:"Convertible Instruments — Protection from Uncertainty",content:`
+<p class="intro">What if you and an investor can't agree on what the startup is worth today? Convertible instruments solve this elegantly by delaying the valuation conversation.</p>
+<div class="con-box"><div class="box-label">📌 How Convertibles Work</div>
+<ul class="blist">
+<li>Investor gives you money now as a <b>loan or preference share</b> (not equity yet).</li>
+<li>Later, when there's a proper funding round or milestone, it <b>converts into equity shares</b> at a price determined by performance.</li>
+<li>If the startup does well → conversion price is higher → investor gets fewer shares (founder suffers less dilution).</li>
+<li>If startup underperforms → conversion price is lower → investor gets more shares (compensates for risk).</li>
+</ul></div>
+<div class="con-box"><div class="box-label">🎁 Additional Features</div>
+<ul class="blist">
+<li><b>Discount to Next Round:</b> Investor converts at a discount (e.g., 20% off) to the next round's price — rewarding them for investing early.</li>
+<li><b>Liquidity Protection:</b> If no exit event happens, investor can demand repayment of their preference shares.</li>
+</ul></div>
+<div class="tip-box"><div class="box-label">💡 Why Founders Love Convertibles (Sometimes)</div><p class="box-text">It avoids valuation fights at a stage where the company is hard to value. But it can also be founder-unfriendly if the startup underperforms — the investor gets a bigger slice.</p></div>
+`},
+{title:"The Valuation Step-by-Step (Kloud Garage Method)",content:`
+<p class="intro">Here's a structured, exam-ready framework for valuing a startup and determining how much equity to give an investor:</p>
+<ol class="steps">
+<li><b>Estimate Funding Requirements:</b> Total cash needed = CapEx + Operating Cash Burns.</li>
+<li><b>Determine Funding Timeline:</b> Plan which rounds happen in which year (e.g., ₹2Cr now, ₹10Cr in Year 2).</li>
+<li><b>Define Investor Expectations:</b> What return multiple does this investor want? (Early investors: 16x; later-stage: 5x)</li>
+<li><b>Estimate Exit Year:</b> When will the investor cash out? (Typically 4–8 years from investment).</li>
+<li><b>Calculate Exit Valuation:</b> Apply industry multiple to Year-4/5 projected revenue. E.g., 5x sales multiple × ₹50Cr revenue = ₹250Cr valuation.</li>
+<li><b>Required Exit Equity:</b> Target Cash Return ÷ Exit Valuation. (e.g., ₹50Cr return ÷ ₹250Cr = 20% at exit).</li>
+<li><b>Entry Equity (Adjusting for Future Dilution):</b> If future rounds will dilute by 30%, investor needs 20% ÷ (1-0.30) = 28.6% today to end up with 20% at exit.</li>
+</ol>
+<div class="warn-box"><div class="box-label">⚠️ Golden Rule of Staged Funding</div><p class="box-text">Raise small amounts first (at high-risk/high-return stage), and bigger amounts later (at lower-risk/lower-return stage). This dramatically reduces total founder dilution. <b>Never raise too much too early.</b></p></div>
+`}
+]},
+{id:3,emoji:"📊",title:"Financial Modelling, Cash Flow & Funding Estimation",subtitle:"Building financial models and calculating how much money a startup needs",color:"#C77B3F",
+sections:[
+{title:"The Kareer Sciences Case — Context",content:`
+<p class="intro">To understand financial modelling, we use a fictional startup called <b>Kareer Sciences</b> — a company helping people find better careers using data, psychology, and mentoring.</p>
+<div class="con-box"><div class="box-label">🎯 The Business</div>
+<ul class="blist">
+<li><b>Problem:</b> Poor career choices → job dissatisfaction, low pay, short tenures.</li>
+<li><b>Solution:</b> The 3E Approach — Endowments (natural abilities), Education (academic background), Environment (local job market).</li>
+<li><b>How:</b> Networked mentoring + psychometric tests + a massive dataset of careers + an opportunity repository.</li>
+<li><b>Model:</b> Physical centres staffed by "associates" who counsel clients one-on-one.</li>
+</ul></div>
+<div class="tip-box"><div class="box-label">💡 Why This Case?</div><p class="box-text">It teaches us to build a financial model from scratch: how many clients, how many staff, how much revenue, how much cost, and ultimately — how much funding do we need?</p></div>
+`},
+{title:"Three Growth Strategies",content:`
+<p class="intro">The founder has three choices for how fast to grow. Speed affects costs, team structure, capital needs, and investor risk appetite.</p>
+<table class="dtable"><thead><tr><th>Strategy</th><th>Plan</th><th>Method</th><th>Capital Needed</th></tr></thead>
+<tbody>
+<tr><td><b>🐢 Lazy</b></td><td>4 centres in 3 years</td><td>Slow, founder controls everything</td><td>Low</td></tr>
+<tr><td><b>😌 Cozy</b></td><td>12 centres in 3 years (1/quarter)</td><td>Medium pace, HR-intensive</td><td>Medium</td></tr>
+<tr><td><b>🚀 Crazy</b></td><td>36 centres in 3 years (1/month)</td><td>Tech-led automation to manage speed</td><td>High + ₹10Cr tech investment</td></tr>
+</tbody></table>
+<div class="tip-box"><div class="box-label">🎯 The Crazy Insight</div><p class="box-text">The "Crazy" path breaks the linear relationship between centres and costs — because it requires a one-time ₹10 Crore technology platform investment. After that, each new centre is cheaper to set up because the tech does the heavy lifting.</p></div>
+`},
+{title:"Bootstrapping vs. Venture Capital",content:`
+<p class="intro">Should you fund growth from your own profits, or bring in investors? Both have merit depending on your situation.</p>
+<div class="con-box"><div class="box-label">📌 When to Bootstrap</div>
+<ul class="blist">
+<li>Business doesn't need heavy capital to scale</li>
+<li>Margins are low and VC returns would be impossible</li>
+<li>Founder wants absolute control</li>
+<li>Example: Tech services companies (consulting, freelance)</li>
+</ul></div>
+<div class="con-box"><div class="box-label">📌 When to Raise VC</div>
+<ul class="blist">
+<li>Bootstrapping slows growth so much that competitors capture your market</li>
+<li>You've proven product-market fit and just need fuel</li>
+<li>The business model is proven to be scalable with capital</li>
+</ul></div>
+<div class="warn-box"><div class="box-label">⚠️ The #1 Rule</div><p class="box-text"><b>Always prioritize having enough capital over minimizing dilution.</b> Running out of cash kills startups. Giving away a bit more equity is recoverable. Zero cash is not.</p></div>
+`},
+{title:"What is a Cash Budget?",content:`
+<p class="intro">A cash budget is simply a month-by-month statement of <b>money coming in</b> (receipts) and <b>money going out</b> (payments). It ignores accounting rules and only tracks actual cash.</p>
+<div class="con-box"><div class="box-label">📋 Cash Budget Key Items</div>
+<ul class="blist">
+<li><b>Cash Inflows:</b> Revenue collected from clients in that period.</li>
+<li><b>Cash Outflows (Operational):</b> Salaries, marketing, admin overheads — recurring monthly costs.</li>
+<li><b>Cash Outflows (CapEx):</b> One-time costs — interiors, deposits, equipment, software.</li>
+</ul></div>
+<div class="form-box"><div class="box-label">📐 Key Definitions</div>
+<div class="formula">Cash Burn = Monthly Payments − Monthly Receipts (when payments exceed receipts)</div>
+<div class="formula">Cumulative Cash Deficit = Total excess of all payments over all receipts over time</div>
+<div class="formula">Peak Operational Cash Deficit = The HIGHEST cumulative shortfall before the business turns cash-positive</div>
+</div>
+<div class="tip-box"><div class="box-label">💡 Why Peak Deficit Matters</div><p class="box-text">This is the minimum amount of funding you need to raise. If your peak deficit is ₹80 Lakhs, you need at least that much — plus a buffer — to ensure the business survives its growth phase.</p></div>
+`},
+{title:"Centre-Level Financial Model",content:`
+<p class="intro">Each Kareer Sciences centre is modelled as an identical "mini-firm" with standard capacity, costs, and revenue. This is called <b>unit economics at the centre level</b>.</p>
+<div class="con-box"><div class="box-label">📌 The Assumptions</div>
+<ul class="blist">
+<li><b>Infrastructure cost:</b> ₹26 Lakhs per centre (interiors, deposits, equipment)</li>
+<li><b>Max capacity:</b> 150 clients per centre</li>
+<li><b>Max staff:</b> 20 people (15 associates + 5 admin/marketing)</li>
+<li><b>Associate works:</b> 160 hours/month</li>
+<li><b>Each client needs:</b> 16 hours of engagement</li>
+<li><b>Therefore, each associate serves:</b> 160 ÷ 16 = <b>10 clients/month</b></li>
+</ul></div>
+<div class="form-box"><div class="box-label">📐 Cost Structure</div>
+<div class="formula">Associate Cost = ₹1 Lakh/month per associate</div>
+<div class="formula">Overhead = ₹1 Lakh/month per associate (100% of associate cost)</div>
+<div class="formula">Associates Required = Number of Active Clients ÷ 10</div>
+</div>
+`},
+{title:"Revenue and Staffing Calculations",content:`
+<p class="intro">Once you know client numbers, you can calculate revenue and staffing systematically.</p>
+<div class="form-box"><div class="box-label">📐 Revenue Formula</div>
+<div class="formula">Client Fee = ₹25,000 per client</div>
+<div class="formula">Monthly Revenue = Number of Active Clients × ₹25,000</div>
+<div class="formula">Associates Required = Number of Clients ÷ 10 (round up)</div>
+</div>
+<div class="ex-box"><div class="box-label">📖 Example — Quarter 2 (10 clients in a centre)</div><p class="box-text">
+Revenue = 10 × ₹25,000 = ₹2.5 Lakhs<br>
+Associates needed = 10 ÷ 10 = 1 associate<br>
+Associate cost = ₹1L, Overhead = ₹1L → Total cost = ₹2L<br>
+Contribution = ₹2.5L − ₹2L = ₹0.5L positive!
+</p></div>
+<div class="con-box"><div class="box-label">📈 Client Ramp-Up Pattern</div>
+<ul class="blist">
+<li>Q1: 5 clients → Q2: 10 → Q3: 20 → Q4: 30 → ... ramping up to 150 by Q8</li>
+<li>After Q8: Centre operates in "steady state" at maximum capacity</li>
+<li>Staff additions strictly follow client additions — no hiring ahead of demand</li>
+</ul></div>
+`},
+{title:"Total Funding Formula & Exit Valuation",content:`
+<p class="intro">Once the per-centre model is built, scaling up gives us the total capital requirement and valuation scenarios.</p>
+<div class="form-box"><div class="box-label">📐 Total Funding Formula</div>
+<div class="formula">Total Funding = (Peak Deficit × No. of Centres) + (₹26L Infra × No. of Centres) + Technology Investment</div>
+</div>
+<div class="con-box"><div class="box-label">🏷️ Upfront vs Staged Funding</div>
+<ul class="blist">
+<li><b>Upfront:</b> Raise all capital now. Easy peace of mind but you're valued at maximum risk → maximum dilution.</li>
+<li><b>Staged (Smarter):</b> Raise small amount now, prove the model works, raise more later at better valuation. Investors now take less risk → demand lower returns → founder keeps more equity.</li>
+</ul></div>
+<table class="dtable"><thead><tr><th>Strategy</th><th>Investor Return Target</th><th>Founder Dilution at Exit</th></tr></thead>
+<tbody>
+<tr><td>Lazy (low risk)</td><td>Low (e.g., 3.5x)</td><td>~39% to investor</td></tr>
+<tr><td>Cozy (medium)</td><td>Medium (e.g., 7x)</td><td>Medium</td></tr>
+<tr><td>Crazy (high risk)</td><td>High (e.g., 11x)</td><td>~61% to investor</td></tr>
+</tbody></table>
+<div class="warn-box"><div class="box-label">⚠️ Key Investor Turn-offs</div>
+<ul class="blist tip-box" style="background:transparent;border:none;padding:0;margin:0;">
+<li>Claiming you have "zero competition" — investors know that's never true</li>
+<li>Buzzword soup without a clear customer problem</li>
+<li>Ridiculous projections (₹100Cr in 5 years with zero revenue today)</li>
+<li>Hiding risks — intellectual honesty is the most valued founder trait</li>
+</ul></div>
+`}
+]},
+{id:4,emoji:"📝",title:"Term Sheets & Investment Deal Structuring",subtitle:"How investment deals are designed, negotiated, and what protections investors demand",color:"#A0589E",
+sections:[
+{title:"What is Deal Structuring?",content:`
+<p class="intro">Deal structuring is the process of designing a financing package so that <b>both founders and investors get what they need</b> — without killing each other's interests.</p>
+<div class="con-box"><div class="box-label">👥 What Each Side Wants</div>
+<ul class="blist">
+<li><b>Investors want:</b> High rate of return, ability to exit within 5–8 years, contractual control if things go wrong.</li>
+<li><b>Founders want:</b> Money to build the business, minimum interference, maximum ownership retention.</li>
+</ul></div>
+<div class="con-box"><div class="box-label">🎭 The Rich vs. King Framework</div>
+<ul class="blist">
+<li><b>Rich Founders:</b> Prioritize wealth creation. Willing to give up control, bring in professional management, chase massive scale. ("I want to be a billionaire, even if I'm not the CEO.")</li>
+<li><b>King Founders:</b> Prioritize control. Want to run their own company on their own terms, even if it grows slower. ("I'd rather own 100% of a smaller company.")</li>
+</ul></div>
+<div class="tip-box"><div class="box-label">🎯 Other Structuring Concerns</div>
+<ul class="blist">
+<li><b>Tax Efficiency:</b> Minimize tax for company and investor (e.g., Angel Tax issues in India).</li>
+<li><b>Regulatory Compliance:</b> SEBI AIF rules for Indian funds; RBI rules for foreign investors.</li>
+<li><b>Future Fundability:</b> Bad terms today can scare away future investors.</li>
+<li><b>ESOPs:</b> Must create employee stock options to attract good talent.</li>
+</ul></div>
+`},
+{title:"Convertible Instruments & Warrants",content:`
+<p class="intro">Instead of straightforward equity, investors often use instruments that can <b>change form</b> based on performance. This protects everyone.</p>
+<div class="con-box"><div class="box-label">📌 Convertible Preference Shares vs Convertible Debentures</div>
+<ul class="blist">
+<li><b>Preference Shares are preferred</b> because they don't appear as <i>debt</i> on the balance sheet — courts won't treat the deal as a simple loan.</li>
+<li><b>Foreign investors almost always use Convertible Preference Shares</b> because RBI has strict rules about foreign currency borrowing (which debentures = debt = triggers RBI rules).</li>
+</ul></div>
+<div class="con-box"><div class="box-label">⚙️ Warrants — The Anti-Dilution Tool</div>
+<ul class="blist">
+<li>When convertibles aren't possible, investors use warrants alongside direct equity.</li>
+<li><b>How it works:</b> If the startup underperforms, the investor can <i>exercise warrants</i> — buy additional shares at an artificially low price, increasing their ownership percentage to compensate for lower company value.</li>
+<li>This acts as a strict incentive for founders to hit their targets!</li>
+</ul></div>
+<div class="tip-box"><div class="box-label">💡 Upside Protection Too</div><p class="box-text">Founders can negotiate the reverse: if you <b>overperform</b>, you can reclaim some equity that was diluted — rewarding outperformance.</p></div>
+`},
+{title:"The Term Sheet — A Non-Binding Offer",content:`
+<p class="intro">Before signing a formal investment agreement, the investor sends a <b>Term Sheet</b> — a preliminary document outlining the key deal terms. Think of it as a "letter of intent."</p>
+<div class="warn-box"><div class="box-label">⚠️ Critical Point</div><p class="box-text">A term sheet is <b>NOT legally binding</b>. Either party can walk away after due diligence reveals problems. This is important — don't celebrate the term sheet, celebrate when money hits your bank account!</p></div>
+<div class="con-box"><div class="box-label">📋 What a Term Sheet Contains</div>
+<ul class="blist">
+<li><b>Deal Details:</b> Investment amount, instrument type, proposed valuation, equity %.</li>
+<li><b>Staging:</b> Funds released in installments tied to milestones (e.g., "₹2Cr now, ₹3Cr when you hire a CFO and hit ₹X revenue").</li>
+<li><b>Conditions Precedent (CPs):</b> Things the founder MUST do before money is released (e.g., hire a professional CEO, clear legal issues).</li>
+<li><b>Validity Period:</b> Usually 60–90 days to conclude the deal.</li>
+<li><b>Exclusivity (No-Shop Clause):</b> Founder cannot approach other investors simultaneously. <i>This clause IS legally binding!</i></li>
+<li><b>Confidentiality:</b> Deal terms are secret. <i>Also legally binding!</i></li>
+</ul></div>
+`},
+{title:"Board Structure & Governance Rights",content:`
+<p class="intro">Once an investor comes in, they want a say in how the company is run. This happens through <b>board representation</b>.</p>
+<div class="con-box"><div class="box-label">🏛️ Board Composition</div>
+<ul class="blist">
+<li><b>Nominee Directors:</b> Appointed by investors, based on equity stake (usually 1–2 seats). They vote on board decisions.</li>
+<li><b>Independent Directors:</b> Neutral members meant to objectively resolve deadlocks. Risk: if the investor influences their selection, they may side with investors.</li>
+<li><b>Observer Status:</b> Foreign investors often prefer this — they attend board meetings and report back, but don't have voting rights (avoids Indian legal liabilities of directorship).</li>
+</ul></div>
+<div class="con-box"><div class="box-label">📡 Information Rights</div>
+<ul class="blist">
+<li>Investors require monthly or quarterly MIS reports (financial + business metrics).</li>
+<li>They often insist on approving who you hire as Head of Finance and your statutory auditors — to ensure data reliability.</li>
+</ul></div>
+`},
+{title:"Minority Protection — Veto Rights",content:`
+<p class="intro">Investors often hold <i>less than 50%</i> of shares — so they can't win a shareholder vote. But they protect themselves with <b>veto rights</b> on critical decisions.</p>
+<div class="tip-box"><div class="box-label">🚦 How Veto Rights Work</div><p class="box-text">Even if an investor owns only 20%, certain major decisions <b>cannot happen</b> without their explicit "yes." These are called <b>Affirmative Covenants</b> or Reserved Matters.</p></div>
+<div class="con-box"><div class="box-label">📋 What Requires Investor Consent</div>
+<ul class="blist">
+<li>Capital expenditure above a certain limit</li>
+<li>Mergers, acquisitions, or asset sales</li>
+<li>Raising new debt or equity</li>
+<li>Paying dividends</li>
+<li>Creating or changing ESOPs</li>
+<li>Hiring or firing CXO-level executives (CEO, CFO, CTO)</li>
+</ul></div>
+`},
+{title:"Exit Clauses — Drag, Tag, Put & Call",content:`
+<p class="intro">Investors need an exit path. Term sheets include legally binding rights that ensure investors can get their money out.</p>
+<table class="dtable"><thead><tr><th>Clause</th><th>What It Means</th><th>Who Benefits</th></tr></thead>
+<tbody>
+<tr><td><b>Drag-Along</b></td><td>If a buyer wants 100% of the company, the minority investor can FORCE the founder to sell their shares too. The founder gets dragged along.</td><td>Investor / Acquirer</td></tr>
+<tr><td><b>Tag-Along</b></td><td>If the founder finds a buyer for their stake, the investor can "tag along" and sell their shares on the same terms. Founder can't sell without including the investor.</td><td>Investor</td></tr>
+<tr><td><b>Put Option</b></td><td>Investor can FORCE the company or founder to buy back their shares at a pre-agreed price.</td><td>Investor</td></tr>
+<tr><td><b>Call Option</b></td><td>Founder can FORCE the investor to sell their shares back at a pre-agreed price.</td><td>Founder</td></tr>
+</tbody></table>
+`},
+{title:"Liquidation Preference — Who Gets Paid First",content:`
+<p class="intro">When a company is sold or liquidated, the <b>payout order</b> matters enormously. Liquidation preference ensures investors get their money back before founders.</p>
+<div class="con-box"><div class="box-label">💰 Two Types of Liquidation Preference</div>
+<ul class="blist">
+<li><b>Non-Participating:</b> Investor CHOOSES between two options — (A) Take their guaranteed multiple (e.g., 2x their investment) back first, OR (B) Convert to equity and take their % of the total sale. They take whichever is higher. Fair for founders.</li>
+<li><b>Participating (Double-Dip):</b> Investor gets their guaranteed multiple FIRST, and THEN also takes their equity % of whatever's left. Very unfriendly to founders — investor profits twice.</li>
+</ul></div>
+<div class="ex-box"><div class="box-label">📖 Example</div><p class="box-text">Investor put in ₹10Cr for 20%, with 2x liquidation preference. Company sells for ₹60Cr.<br>
+<b>Non-Participating:</b> Option A = ₹20Cr (2x back). Option B = 20% of ₹60Cr = ₹12Cr. Investor takes ₹20Cr.<br>
+<b>Participating:</b> Investor takes ₹20Cr first, then 20% of remaining ₹40Cr = ₹8Cr. Total = ₹28Cr!</p></div>
+`},
+{title:"Anti-Dilution Protection — Down Round Defense",content:`
+<p class="intro">A <b>Down Round</b> is when a startup raises money at a <i>lower valuation</i> than the previous round — a sign of distress. Anti-dilution protects earlier investors from being crushed by this.</p>
+<div class="con-box"><div class="box-label">📌 Two Types of Anti-Dilution</div>
+<ul class="blist">
+<li><b>Full Ratchet (Harsh):</b> Early investor's conversion price drops ALL THE WAY to the new lower price. The founder absorbs maximum dilution. Very unfair to founders.</li>
+<li><b>Weighted Average (Fair):</b> Conversion price is adjusted to a blended average between the old high price and new low price. Both founder and investor share the pain. More common in practice.</li>
+</ul></div>
+<div class="ex-box"><div class="box-label">📖 Example</div><p class="box-text">Early investor paid ₹100 per share. New round raises money at ₹40 per share (down round).<br>
+<b>Full Ratchet:</b> Early investor's price is reset to ₹40 — they get way more shares, founder is massively diluted.<br>
+<b>Weighted Average:</b> New price is set at e.g., ₹70 — shares are adjusted moderately, pain is shared.</p></div>
+`}
+]},
+{id:5,emoji:"🚪",title:"Exit Strategies & Investor Returns",subtitle:"How investors and founders eventually cash out — and why it matters from Day 1",color:"#4A8FA0",
+sections:[
+{title:"Why Exits Matter — For Everyone",content:`
+<p class="intro">An <b>exit</b> is when investors and founders convert their equity into cash. It's not an afterthought — it's planned from Day 1 of investment.</p>
+<div class="con-box"><div class="box-label">👥 Why Different Stakeholders Care</div>
+<ul class="blist">
+<li><b>For Investors:</b> VC funds have a limited life (10–12 years). Fund managers MUST return cash to their investors (LPs) within this window. A successful exit also validates their track record, helping them raise their next fund.</li>
+<li><b>For Founders:</b> All your wealth is locked in one company. Exit lets you diversify — take some chips off the table personally, secure financial stability.</li>
+<li><b>For the Market:</b> Exits set real, market-based valuations for the enterprise — what the startup is actually worth, not what a model says.</li>
+</ul></div>
+<div class="tip-box"><div class="box-label">⏰ Typical Exit Timeline</div><p class="box-text">Most VC investments target exits within <b>5 years</b> of investment, within a fund life of 10–12 years. This isn't optional — fund structures legally require it.</p></div>
+`},
+{title:"IPO — The Dream Exit",content:`
+<p class="intro">An IPO (Initial Public Offering) is when a company sells shares to the general public on a stock exchange. It's the most coveted exit route for founders and investors.</p>
+<div class="con-box"><div class="box-label">📌 How an IPO Exit Works</div>
+<ul class="blist">
+<li><b>Offer for Sale (OFS):</b> Existing investors/founders sell their own shares in the IPO at a price set by "book building" (price discovery through institutional investor bids).</li>
+<li><b>Aftermarket Sale:</b> Investors wait for the shares to list on the exchange and sell later — if the company performs post-IPO, prices can go significantly higher.</li>
+<li><b>Why it pays so much:</b> Tens of thousands of retail and institutional investors bid, driving demand — and prices — very high.</li>
+</ul></div>
+<div class="warn-box"><div class="box-label">⚠️ IPO is Hard and Expensive</div>
+<ul class="blist">
+<li>Takes <b>8–12 months</b> to complete</li>
+<li>Requires hiring a <b>Merchant Banker</b> (specialized intermediary)</li>
+<li>Costs <b>7%–10%</b> of total proceeds in fees and commissions</li>
+<li>Requires a <b>Red Herring Prospectus (RHP)</b> — a 450-500 page document disclosing every risk</li>
+<li><b>Roadshows:</b> Management must travel the world pitching to institutional investors (massive time sink)</li>
+<li>Post-IPO: Strict ongoing compliance, public disclosure of all business (including R&D), risk of delisting</li>
+</ul></div>
+`},
+{title:"Trade Sales — Selling to a Corporation",content:`
+<p class="intro">A trade sale is when you sell your company (or a majority stake) to a larger corporation — like when a tech startup gets acquired by Google or Tata.</p>
+<div class="con-box"><div class="box-label">📌 How Trade Sales Work</div>
+<ul class="blist">
+<li><b>Why corporates buy startups:</b> They want the technology, customer base, or talent — faster than building it themselves (Build vs. Buy).</li>
+<li><b>Control requirement:</b> Strategic acquirers usually want 100% control to fully integrate. This triggers <b>Drag-Along rights</b> — the investor forces the founder to sell too.</li>
+<li><b>Speed:</b> Can close in as little as <b>1 month</b>. Far faster than an IPO.</li>
+<li><b>Cost:</b> Much cheaper than an IPO — no merchant banker fees, no RHP.</li>
+</ul></div>
+<div class="warn-box"><div class="box-label">⚠️ Downsides for Founders</div>
+<ul class="blist">
+<li>Lower financial realization than an IPO (fewer bidders)</li>
+<li>Founders are usually phased out within 1–2 years post-acquisition</li>
+<li>If the deal falls through, it can devastate employee morale</li>
+</ul></div>
+`},
+{title:"Secondary Purchases & Buybacks",content:`
+<p class="intro">Not every exit needs a major event like an IPO or acquisition. Here are two quieter options.</p>
+<div class="subsec">Secondary Purchase</div>
+<div class="con-box"><div class="box-label">📌 How it Works</div>
+<ul class="blist">
+<li>An early-stage investor sells their stake to a <b>later-stage financial investor</b> (e.g., a PE fund buys out the angel investor).</li>
+<li>The company stays private — the founder keeps running it.</li>
+<li>The new investor is typically happy with a minority stake, waiting for a bigger exit (IPO) later.</li>
+<li>Speed: Relatively fast. Cost: Low. Return: Moderate.</li>
+</ul></div>
+<div class="subsec">Buyback</div>
+<div class="con-box"><div class="box-label">📌 How Buybacks Work</div>
+<ul class="blist">
+<li><b>Company Buyback:</b> Company uses its own cash to repurchase investor shares. <b>Legal cap: max 25%</b> of share capital under Companies Act Section 68. Often impossible for full exits.</li>
+<li><b>Promoter Buyback:</b> Founder personally buys investor shares back. Problem: founders rarely have that much personal cash.</li>
+<li><b>When used:</b> Distressed situations — investor sells back at ₹1 (a write-off) just to end the relationship.</li>
+</ul></div>
+<div class="tip-box"><div class="box-label">💡 Self-Liquidating Instruments</div><p class="box-text">Used in underdeveloped capital markets. Preference shares or loans that get repaid from company operating cash flows over time — no third-party buyer needed. Investor earns a pre-agreed 3x or 4x over 5 years.</p></div>
+`},
+{title:"Exit Strategy Comparison",content:`
+<p class="intro">Here's a quick comparison of all exit routes to help you remember the tradeoffs:</p>
+<table class="dtable"><thead><tr><th>Exit Route</th><th>Timeframe</th><th>Cost</th><th>Return Potential</th><th>Founder Status After</th></tr></thead>
+<tbody>
+<tr><td><b>IPO</b></td><td>8–12 months</td><td>Very High (7–10%)</td><td>Highest</td><td>Retains control, now public</td></tr>
+<tr><td><b>Trade Sale</b></td><td>~1 month</td><td>Low</td><td>Moderate–High</td><td>Usually exits in 1–2 years</td></tr>
+<tr><td><b>Secondary</b></td><td>Variable</td><td>Low</td><td>Moderate</td><td>Retains control</td></tr>
+<tr><td><b>Buyback</b></td><td>Variable</td><td>Low</td><td>Low</td><td>Regains full control</td></tr>
+</tbody></table>
+<div class="warn-box"><div class="box-label">🔑 The Strategic Reality</div><p class="box-text">Private markets are <b>highly opaque</b> — valuations, terms, and deals are rarely made public. Founders must continuously network at conferences, connect with other founders, and stay plugged in to understand current investor preferences. Fundraising is important, but <b>don't let it distract from actually building the business</b>.</p></div>
+`}
+]},
+{id:6,emoji:"🎯",title:"Startup Fundraising & Investor Engagement",subtitle:"How to plan your funding needs, pitch to investors, and close a deal",color:"#9E7B5C",
+sections:[
+{title:"Planning Your Funding Needs",content:`
+<p class="intro">Before approaching any investor, you need to know <b>exactly how much money you need</b> and what you'll do with it. This requires building financial statements.</p>
+<div class="con-box"><div class="box-label">📋 Short-Term (Next 6 Months)</div>
+<ul class="blist">
+<li>Build a detailed P&L with revenue breakdown and granular cost line items.</li>
+<li>Factor in working capital: receivables, inventory, payables.</li>
+<li>Include CapEx (furniture, machinery, tech).</li>
+<li><b>Always add a 10–15% contingency buffer</b> for unexpected costs.</li>
+</ul></div>
+<div class="con-box"><div class="box-label">📅 Long-Term (2–3 Years)</div>
+<ul class="blist">
+<li>Model how expenses and revenue grow with scale.</li>
+<li>Calculate the gap between internal cash generation and total growth capital needed.</li>
+</ul></div>
+<div class="form-box"><div class="box-label">📐 Operating Cash Flow Formula</div>
+<div class="formula">Operating Cash Flow = Profit After Tax + Depreciation/Amortization + Interest − Change in Working Capital</div>
+<div class="formula">Hierarchy: Internal Accruals → Debt → Equity (in order of preference)</div>
+</div>
+<div class="tip-box"><div class="box-label">💡 Key Rule</div><p class="box-text">Equity is the <b>most expensive form of capital</b> (you're giving away ownership). Only raise equity when you've exhausted cheaper options or when aggressive growth requires it.</p></div>
+`},
+{title:"The Funding Ladder — From Cheapest to Most Expensive",content:`
+<p class="intro">Not all capital is equal. Here's the hierarchy from cheapest to most expensive, from least to most dilutive.</p>
+<table class="dtable"><thead><tr><th>Source</th><th>Cost</th><th>Dilution?</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td><b>Internal Accruals</b></td><td>Free</td><td>None</td><td>Best option — cash your business generates</td></tr>
+<tr><td><b>Bank/NBFC Loans</b></td><td>8–12%</td><td>None</td><td>Requires collateral. Government schemes (CGTMSE) offer better rates.</td></tr>
+<tr><td><b>Venture Debt</b></td><td>14–18%</td><td>Minimal</td><td>Bridge financing before equity rounds. Specialized NBFCs.</td></tr>
+<tr><td><b>Mezzanine</b></td><td>High</td><td>Partial</td><td>Short-term bridge; mix of debt + equity features.</td></tr>
+<tr><td><b>Equity (VC/PE)</b></td><td>Highest</td><td>Yes</td><td>No mandatory repayment, but investors want 5–16x returns.</td></tr>
+</tbody></table>
+<div class="con-box"><div class="box-label">📌 Minority vs Majority Equity</div>
+<ul class="blist">
+<li><b>Minority VC (&lt;50%):</b> Access to large capital, governance help, networking. But: pressure for aggressive growth, board control diluted, mandatory exit in 4–5 years.</li>
+<li><b>Majority PE (&gt;50%):</b> Founder gets huge personal liquidity. But: loses operational control, must adapt to corporate culture.</li>
+<li><b>Strategic M&A Majority:</b> Access to giant distribution networks. But: complete loss of independence, non-compete clauses.</li>
+</ul></div>
+`},
+{title:"How to Value Your Startup (Practically)",content:`
+<p class="intro">Forget complex DCF models — in venture equity negotiations, practitioners use simpler, market-based methods.</p>
+<div class="con-box"><div class="box-label">📌 Three Practical Valuation Methods</div>
+<ul class="blist">
+<li><b>Listed Comparables:</b> Find publicly listed companies in your sector and use their P/E or EV/Sales multiples as a benchmark for your private company.</li>
+<li><b>Precedent Transactions:</b> Look at recent M&A or VC funding rounds in your industry. If similar companies raised at 8x revenue, that's your anchor.</li>
+<li><b>Net Asset Value (NAV):</b> Used for asset-heavy businesses (hospitals, infrastructure) — value is based on the assets owned, not future revenues.</li>
+</ul></div>
+`},
+{title:"The Physics, Chemistry & Maths of M&A",content:`
+<p class="intro">If you're pitching for a strategic acquisition or a high-valuation deal, you need to align three things — not just the numbers.</p>
+<div class="con-box"><div class="box-label">🔺 The Three Pillars</div>
+<ul class="blist">
+<li><b>Physics (Business Fit — 1+1=3):</b> Show tangible synergies. How do your businesses complement each other? Shared supply chains, overlapping customers, eliminating redundant costs. Answer: "Why does buying us make them stronger than building it themselves?"</li>
+<li><b>Chemistry (Cultural Fit):</b> The teams must actually like working together. Failed post-acquisition integration is often cultural, not financial.</li>
+<li><b>Maths (Valuation):</b> Only discuss numbers AFTER establishing Physics and Chemistry. Leading with valuation before proving fit kills deals.</li>
+</ul></div>
+<div class="tip-box"><div class="box-label">🎯 Maximize Your Valuation</div>
+<ul class="blist">
+<li>Create <b>FOMO (Fear of Missing Out)</b> — make buyers feel this is a rare opportunity</li>
+<li>Engage <b>multiple buyers simultaneously</b> — competitive bids drive prices up</li>
+<li><b>Arbitrage:</b> Position yourself so a large listed company (trading at 8x revenue) buys you at 5x — instant value creation for them justifies their premium price</li>
+</ul></div>
+`},
+{title:"Finding and Reaching Out to Investors",content:`
+<p class="intro">Fundraising is sales. And like any sales process, it starts with identifying the right prospects and warming up the relationship.</p>
+<div class="con-box"><div class="box-label">🔍 Finding the Right Investors</div>
+<ul class="blist">
+<li>Use databases, LinkedIn, and industry events to build a "long list" of potential investors.</li>
+<li>Filter by: fund thesis, preferred ticket size, sector focus, holding period.</li>
+<li><b>Reverse due diligence:</b> Talk to founders in the investor's portfolio — how did the investor behave when things got tough? This is crucial.</li>
+</ul></div>
+<div class="con-box"><div class="box-label">📬 Outreach Strategies (Best to Worst)</div>
+<ul class="blist">
+<li><b>Warm Introductions:</b> Best conversion rate. Use your network (fellow founders, advisors) on a give-and-take basis.</li>
+<li><b>Investment Bankers:</b> Hire IBs with sector expertise. Make sure fees are success-based (paid when money hits the bank), not just retainer fees.</li>
+<li><b>Cold Outreach:</b> Must be highly researched, polite, and brief. If rejected, establish a hook and send systematic quarterly updates to build the relationship over time.</li>
+</ul></div>
+`},
+{title:"Building Your Pitch Deck",content:`
+<p class="intro">A great pitch = <b>Hook + Structure + Outcome</b>. You have minutes to capture attention and hours to lose a deal.</p>
+<div class="con-box"><div class="box-label">📊 The Key Slides</div>
+<ul class="blist">
+<li><b>Investment Highlights:</b> Executive summary — rapid growth, unit economics, brand, scale. Lead with your best numbers.</li>
+<li><b>Market Opportunity (TAM/SAM/SOM):</b> Show the market size mathematically (see below).</li>
+<li><b>Competitive Positioning:</b> Visual matrix of you vs. competitors. What's your unique differentiation? Price alone is not a moat.</li>
+<li><b>Team (STAR Framework):</b> Situation → Task → Action → Results. Show founders' track records with proof.</li>
+<li><b>Business Model:</b> How do you make money? Revenue streams, pricing, target customer.</li>
+<li><b>Operations:</b> Supply chain, manufacturing, tech automation.</li>
+<li><b>Traction & Financials:</b> Growth graphs, CAGR, gross margins, EBITDA. Address any dips proactively.</li>
+<li><b>The Ask:</b> How much, what for, and what's the investor's exit story.</li>
+</ul></div>
+<div class="form-box"><div class="box-label">📐 TAM / SAM / SOM</div>
+<div class="formula">TAM = Total Addressable Market — the entire global/macro opportunity</div>
+<div class="formula">SAM = Serviceable Addressable Market — the segment you target (geography + demographics)</div>
+<div class="formula">SOM = Serviceable Obtainable Market — the realistic slice you can actually capture now</div>
+</div>
+<div class="tip-box"><div class="box-label">🎯 Two Deck Versions</div><p class="box-text">Keep a <b>detailed email version</b> (they read it alone) and a <b>visual presentation version</b> (you talk through it). Also prepare a short <b>Teaser</b> for initial outreach — don't share full financials before NDA.</p></div>
+`},
+{title:"From Term Sheet to Deal Closure",content:`
+<p class="intro">Getting a term sheet is exciting — but the deal isn't done until money hits your bank. Here's what happens between term sheet and closure.</p>
+<div class="subsec">Due Diligence — 3 Types</div>
+<ol class="steps">
+<li><b>Commercial DD:</b> Investors verify your market claims and customer stickiness — they'll call your top clients directly. Prep your customers beforehand to avoid rumors.</li>
+<li><b>Financial DD:</b> Auditing firms dig into your books. They create a "normalized P&L" (removing one-off items), check revenue integrity, and hunt for hidden liabilities (unpaid gratuity, PF).</li>
+<li><b>Legal DD:</b> Lawyers review all contracts for restrictive clauses, regulatory licenses, IP ownership, and labor compliance.</li>
+</ol>
+<div class="con-box"><div class="box-label">📋 Final Legal Documents</div>
+<ul class="blist">
+<li><b>SHA (Shareholders Agreement):</b> The "rulebook" — governs the entire investor-founder relationship, rights, governance, exits.</li>
+<li><b>SPA (Share Purchase Agreement):</b> Governs buying existing shares. Includes founder warranties and indemnities.</li>
+<li><b>SSA (Share Subscription Agreement):</b> Governs issuing new shares to the investor.</li>
+<li><b>Conditions Precedent (CP):</b> Company must complete a checklist before money is wired (e.g., amend AOA, clear compliance issues).</li>
+<li><b>Conditions Subsequent (CS):</b> Actions completed shortly after receiving funds.</li>
+</ul></div>
+<div class="warn-box"><div class="box-label">⚠️ The Deal Closes ONLY When Cash Hits the Bank</div><p class="box-text">Many deals fall apart during due diligence. Signed documents mean nothing until the wire transfer is confirmed. Then send an impactful press release to maximize brand visibility.</p></div>
+`}
+]},
+{id:7,emoji:"⚖️",title:"Legal Foundations — Startup Incorporation",subtitle:"How to legally set up your startup in India and stay compliant",color:"#5C7A9E",
+sections:[
+{title:"Choosing Your Business Structure",content:`
+<p class="intro">The legal structure you choose affects how you're taxed, how much you're personally liable, and crucially — whether VCs will invest in you at all.</p>
+<table class="dtable"><thead><tr><th>Structure</th><th>Liability</th><th>VC-Friendly?</th><th>Best For</th></tr></thead>
+<tbody>
+<tr><td><b>Sole Proprietorship</b></td><td>Unlimited (you are the business)</td><td>❌ No</td><td>Very small businesses, freelancers</td></tr>
+<tr><td><b>Partnership Firm</b></td><td>Unlimited</td><td>❌ No</td><td>Small professional services</td></tr>
+<tr><td><b>LLP (Limited Liability Partnership)</b></td><td>Limited to capital</td><td>⚠️ Partial</td><td>Professional services, not for repeated VC raises</td></tr>
+<tr><td><b>Private Limited Company</b></td><td>Limited (max 200 shareholders)</td><td>✅ Yes — Best</td><td>All startups seeking VC/Angel/FDI</td></tr>
+<tr><td><b>OPC (One Person Company)</b></td><td>Limited</td><td>⚠️ Limited</td><td>Solo founders; cannot be NBFC or non-profit</td></tr>
+</tbody></table>
+<div class="warn-box"><div class="box-label">⚠️ Why Private Limited for VC?</div><p class="box-text">Private Limited companies have clean cap tables, easy ownership transfers via share transfers, limited liability, and perpetual succession. VCs won't invest in partnerships — unlimited liability and messy exit structures.</p></div>
+`},
+{title:"Incorporating a Private Limited Company",content:`
+<p class="intro">Here's the step-by-step process to officially register a Private Limited Company in India.</p>
+<div class="con-box"><div class="box-label">📋 Prerequisites</div>
+<ul class="blist">
+<li><b>DSC (Digital Signature Certificate):</b> Needed for online form filing. Valid for 1–3 years.</li>
+<li><b>DIN (Director Identification Number):</b> Unique 8-digit lifetime number for each director. Max 3 allotted at incorporation. Must renew annually via DIR-3 KYC by June 30th.</li>
+<li><b>MOA (Memorandum of Association):</b> The company's "constitution" — external boundaries. Contains company name, objectives, authorized capital, state of registered office, liability clause.</li>
+<li><b>AOA (Articles of Association):</b> The "rulebook" — internal administration. Shareholder rights, board powers, meeting procedures. Note: AOA supersedes any Shareholders Agreement in conflicts.</li>
+</ul></div>
+<ol class="steps">
+<li><b>SPICe+ Part A:</b> Reserve your company name (valid for 20 days, extendable to 60).</li>
+<li><b>SPICe+ Part B + AGILE-PRO:</b> File with subscriber IDs, MOA, AOA, and declarations. Gives you PAN, TAN, ESIC, EPFO, and bank account simultaneously.</li>
+<li><b>Registered Office:</b> Must be physically identifiable — residential, commercial, or co-working space. Display name board with CIN, GST, email.</li>
+</ol>
+<div class="tip-box"><div class="box-label">💡 LLP Incorporation</div><p class="box-text">For LLPs: Use RUN-LLP for name (valid 90 days), then FiLLiP form for incorporation, then Form 3 (LLP Agreement) within 30 days of incorporation.</p></div>
+`},
+{title:"DPIIT Start-up Registration — Unlock Special Benefits",content:`
+<p class="intro">Once incorporated, apply for DPIIT recognition — it unlocks massive regulatory benefits that regular companies don't get.</p>
+<div class="con-box"><div class="box-label">📋 Eligibility</div>
+<ul class="blist">
+<li>Registered as Partnership Firm, LLP, or Private Limited Company (NOT sole proprietorship)</li>
+<li>Working on innovation, technology, or intellectual property</li>
+<li>Annual turnover must NOT exceed ₹100 Crores in any previous year</li>
+<li>Recognition valid for <b>10 years</b> from date of incorporation</li>
+<li>Cannot be formed by splitting/merging an existing business</li>
+</ul></div>
+<div class="con-box"><div class="box-label">🎁 DPIIT Benefits</div>
+<ul class="blist">
+<li>Self-certification under labour and environmental laws (no inspector raids)</li>
+<li>Reduced fees and fast-track processing for patents</li>
+<li>Can issue <b>Convertible Notes</b> (only DPIIT startups can do this)</li>
+<li>Can issue ESOPs to promoter directors (normally banned)</li>
+<li>Exempt from limits on shareholder borrowings (for 5 years)</li>
+<li>FEMA relaxations — can issue convertible notes to non-residents</li>
+<li>Income Tax holidays and carry-forward of losses even after ownership changes</li>
+</ul></div>
+`},
+{title:"MSME Registration (Udyam)",content:`
+<p class="intro">If your startup is a Micro, Small, or Medium Enterprise, register under UDYAM — it's free, fully online, requires no renewal, and gives great benefits.</p>
+<table class="dtable"><thead><tr><th>Type</th><th>Investment in Plant/Machinery</th><th>Annual Turnover</th></tr></thead>
+<tbody>
+<tr><td><b>Micro</b></td><td>Up to ₹2.5 Crores</td><td>Up to ₹10 Crores</td></tr>
+<tr><td><b>Small</b></td><td>Up to ₹25 Crores</td><td>Up to ₹100 Crores</td></tr>
+<tr><td><b>Medium</b></td><td>Up to ₹125 Crores</td><td>Up to ₹500 Crores</td></tr>
+</tbody></table>
+<div class="con-box"><div class="box-label">🎁 MSME Benefits</div>
+<ul class="blist">
+<li>Reduced loan interest rates</li>
+<li>IP and trademark fee subsidies</li>
+<li><b>45-day payment protection:</b> Corporates MUST pay MSME dues within 45 days. Unpaid dues must be reported via Form MSME-1 (half-yearly).</li>
+</ul></div>
+`},
+{title:"Post-Incorporation Compliance Timeline",content:`
+<p class="intro">After incorporating, there's a strict list of actions and deadlines. Missing these is a common startup mistake that creates problems during due diligence.</p>
+<div class="form-box"><div class="box-label">⏰ Critical Deadlines</div>
+<div class="formula">First Board Meeting: Within 30 days of incorporation</div>
+<div class="formula">Form INC-20A (Commencement of Business): File BEFORE starting operations or borrowing</div>
+<div class="formula">Share Certificates: Issue within 60 days of incorporation</div>
+<div class="formula">Statutory Auditor: Appoint within 30 days; file Form ADT-1 within 15 days of appointment (5-year tenure!)</div>
+<div class="formula">Board Meetings: Minimum 4 per year; max 120-day gap between meetings</div>
+<div class="formula">AGM: First AGM within 9 months of first FY closure; subsequent within 6 months</div>
+<div class="formula">Form AOC-4 (Financial Statements): Within 30 days of AGM</div>
+<div class="formula">Form MGT-7 (Annual Return): Within 60 days of AGM</div>
+</div>
+<div class="warn-box"><div class="box-label">⚠️ Don't Skip the Auditor Detail</div><p class="box-text">The statutory auditor must be appointed for a <b>5-year term</b>, not 1 year. This is a common mistake flagged in due diligence and creates penalties.</p></div>
+`},
+{title:"How to Raise Equity: Rights Issue, Private Placement & Convertible Notes",content:`
+<p class="intro">Once incorporated, there are specific legal processes for raising equity. Each has its own rules.</p>
+<div class="subsec">Rights Issue — Offering to Existing Shareholders</div>
+<ol class="steps">
+<li>Board meeting approves the issue and sets the price.</li>
+<li>Offer letter sent to existing shareholders; kept open for 7–30 days. Shareholders can accept, decline, or renounce their rights. (Silence = declined.)</li>
+<li>Allot shares within 60 days of receiving application money.</li>
+<li>File Form PAS-3 (Return of Allotment) within 30 days of allotment.</li>
+</ol>
+<div class="subsec">Private Placement — Selling to Select New Investors (CCPS/CCD)</div>
+<ol class="steps">
+<li>Verify sufficient Authorized Share Capital, open a separate Escrow bank account, and get a Registered Valuer's Report (valid for 90 days).</li>
+<li>Pass a Special Resolution (75% majority) in a General Meeting. File Form MGT-14 within 30 days.</li>
+<li>Issue formal Private Placement Offer Letter (Form PAS-4) to selected investors.</li>
+<li>Allot shares within 60 days of receiving funds. <b>Funds CANNOT be used until Form PAS-3 is filed!</b></li>
+</ol>
+<div class="tip-box"><div class="box-label">📝 Convertible Notes (DPIIT Only)</div>
+<ul class="blist">
+<li>A hybrid debt instrument that converts to equity within max 10 years.</li>
+<li><b>Minimum ticket size: ₹25 Lakhs</b> per investor per tranche.</li>
+<li>Requires Board + General Meeting approval + MGT-14 filing.</li>
+<li>No upfront valuation report needed — priced at the conversion event.</li>
+</ul></div>
+`},
+{title:"ESOPs — Rewarding Your Team with Ownership",content:`
+<p class="intro">ESOPs (Employee Stock Option Plans) give employees the right to buy company shares at a future date, at a fixed low price. It's a powerful tool to attract and retain talent without spending cash.</p>
+<div class="con-box"><div class="box-label">👥 Who Can Get ESOPs</div>
+<ul class="blist">
+<li><b>Eligible:</b> Permanent employees, directors, employees of holding/subsidiary companies.</li>
+<li><b>Not eligible (normally):</b> Independent directors, promoter group, directors holding &gt;10% equity.</li>
+<li><b>DPIIT Exception:</b> Startups CAN grant ESOPs to promoters and directors for the first <b>10 years</b>!</li>
+</ul></div>
+<div class="con-box"><div class="box-label">📋 The ESOP Lifecycle</div>
+<ul class="blist">
+<li><b>Grant:</b> Company offers options to the employee ("You have the right to buy 100 shares").</li>
+<li><b>Vesting:</b> The conditions/time before options mature. Minimum 1-year "cliff" — no options can vest in the first year. After that, vesting can be annual (25%/year) or performance-based.</li>
+<li><b>Exercise:</b> Employee pays the grant price to convert vested options into actual shares.</li>
+<li><b>Selling:</b> Employee sells shares at fair market value for cash profit.</li>
+</ul></div>
+<div class="tip-box"><div class="box-label">💡 Tax at Exercise</div><p class="box-text">When an employee exercises options, the difference between fair market value and the grant price is taxed as <b>perquisite income</b>. DPIIT startups get a deferral benefit — tax can be deferred for up to 5 years or until the shares are sold.</p></div>
+`}
+]},
+{id:8,emoji:"🏛️",title:"Legal Framework & Governance in VC",subtitle:"The complete legal machinery behind VC investments, shareholder rights, IP, and labour law",color:"#9E5C6B",
+sections:[
+{title:"The VC Ecosystem — How It Works",content:`
+<p class="intro">Venture Capital funds are not just rich people throwing money around. They're sophisticated, regulated financial institutions with a specific structure.</p>
+<div class="con-box"><div class="box-label">🏗️ The VC Fund Structure</div>
+<ul class="blist">
+<li><b>Structure in India:</b> VC funds are set up as <b>Alternative Investment Funds (AIFs)</b>, usually Category I, regulated by SEBI.</li>
+<li><b>Minimum corpus:</b> ₹20 Crores. Cannot accept less than ₹1 Crore from a single LP (investor in the fund).</li>
+<li><b>Concentration limit:</b> Max 25% of corpus in a single company.</li>
+<li><b>Capital sources (LPs):</b> Institutional investors, family offices, sovereign funds, high-net-worth individuals.</li>
+</ul></div>
+<div class="form-box"><div class="box-label">📐 How VCs Make Money</div>
+<div class="formula">Management Fee: ~2% of corpus annually (covers operations, salaries, rent)</div>
+<div class="formula">Carried Interest (Carry): ~20% of the fund's profits earned at exit</div>
+<div class="formula">Example: ₹100Cr fund → ₹2Cr/year management fee + 20% of all profits made at exit</div>
+</div>
+`},
+{title:"The Funding Journey: Seed to IPO",content:`
+<p class="intro">Startups don't raise one big check. They progress through distinct stages, each with a different investor profile and purpose.</p>
+<table class="dtable"><thead><tr><th>Stage</th><th>Investor</th><th>Purpose</th><th>What Investors Expect</th></tr></thead>
+<tbody>
+<tr><td><b>Bootstrapping</b></td><td>Founders themselves</td><td>Initial build</td><td>Maximum ownership</td></tr>
+<tr><td><b>Angels / F&F</b></td><td>Angels, friends, family</td><td>Proof of concept</td><td>Early belief + mentorship</td></tr>
+<tr><td><b>Seed / Pre-A / Series A</b></td><td>Institutional VCs</td><td>Scale, hire, distribute</td><td>High governance, board rights</td></tr>
+<tr><td><b>Series B/C (Growth)</b></td><td>Large VCs, growth equity</td><td>Unit economics, international expansion</td><td>Founders gain more power</td></tr>
+<tr><td><b>Pre-IPO / IPO</b></td><td>PE crossovers, public markets</td><td>Massive liquidity + exit</td><td>Extreme regulatory burden</td></tr>
+</tbody></table>
+`},
+{title:"Term Sheet Fundamentals (Revisited)",content:`
+<p class="intro">We covered term sheets in Module 4, but here's the governance-focused view.</p>
+<div class="con-box"><div class="box-label">📋 What's Binding vs Non-Binding</div>
+<ul class="blist">
+<li><b>Non-Binding (Most of the term sheet):</b> Valuation, investment amount, board composition, protective rights. You can't legally force the investor to fund you based on a term sheet.</li>
+<li><b>Binding (These three always):</b> Confidentiality, Exclusivity (No-Shop clause), Governing Law.</li>
+</ul></div>
+<div class="con-box"><div class="box-label">📌 CCPS — The Preferred Instrument in India</div>
+<ul class="blist">
+<li><b>CCPS = Compulsorily Convertible Preference Shares.</b> The default investment instrument for Indian VCs.</li>
+<li>Gives investors <b>preferential rights</b> (liquidation preference, preferred dividends) until conversion.</li>
+<li>Automatically converts to equity shares at a triggering event (IPO, next round).</li>
+<li>Cleaner than debt for both balance sheet and FEMA compliance.</li>
+</ul></div>
+`},
+{title:"Corporate Governance & Board Structure",content:`
+<p class="intro">Good governance is how investors monitor their investment without micromanaging the founders.</p>
+<div class="con-box"><div class="box-label">🏛️ Board Roles</div>
+<ul class="blist">
+<li><b>Nominee Directors:</b> Appointed by investors. Have full voting rights but owe <i>fiduciary responsibility to the company</i> — not just their investor.</li>
+<li><b>Observers:</b> Attend board meetings, report back to their principals. No voting rights, no legal liability.</li>
+<li><b>Independent Directors:</b> Neutral arbiters for deadlocks. Must be genuinely independent (not secretly beholden to the investor who suggested them).</li>
+</ul></div>
+<div class="con-box"><div class="box-label">🚦 Reserved Matters (Affirmative Voting)</div>
+<ul class="blist">
+<li>A specific list of actions that CANNOT happen without the investor's explicit approval, regardless of voting math.</li>
+<li>Covers: changing business line, issuing new shares, selling major assets, large CapEx, taking significant debt, hiring/firing CXOs.</li>
+</ul></div>
+<div class="tip-box"><div class="box-label">📡 Information Rights</div><p class="box-text">Investors receive quarterly or annual financials and have audit access rights. This monitors performance without day-to-day interference — the "trust but verify" approach.</p></div>
+`},
+{title:"Shareholder Rights & Investor Protections",content:`
+<p class="intro">Beyond board seats, investors build in a stack of legal rights to protect their investment through contract.</p>
+<table class="dtable"><thead><tr><th>Right</th><th>What It Means</th></tr></thead>
+<tbody>
+<tr><td><b>Pre-emptive Rights</b></td><td>Existing investors can participate pro-rata in new funding rounds — preventing further dilution without consent.</td></tr>
+<tr><td><b>ROFR (Right of First Refusal)</b></td><td>If founder wants to sell shares, investor gets the right to match a third-party offer first.</td></tr>
+<tr><td><b>ROFO (Right of First Offer)</b></td><td>Founder must ask the investor for a price BEFORE offering shares to external parties.</td></tr>
+<tr><td><b>Tag-Along</b></td><td>If founder sells, investor can join the sale on identical terms.</td></tr>
+<tr><td><b>Drag-Along</b></td><td>If investor needs 100% for an acquirer, they can force founder to sell their shares too.</td></tr>
+<tr><td><b>Liquidation Preference</b></td><td>Investors get paid their 1x–2x capital back before founders receive any exit proceeds.</td></tr>
+<tr><td><b>Anti-Dilution</b></td><td>Full Ratchet (harsh) or Weighted Average (fair) protection against down-round dilution.</td></tr>
+</tbody></table>
+`},
+{title:"Key Transaction Documents (SHA, SSA, SPA)",content:`
+<p class="intro">After the term sheet and due diligence, the deal is formalized through three main legal documents.</p>
+<div class="con-box"><div class="box-label">📄 The Three Documents</div>
+<ul class="blist">
+<li><b>SHA (Shareholders Agreement):</b> The "master rulebook" governing the entire investor-founder relationship — rights, governance, exits. This is the most important document.</li>
+<li><b>SSA (Share Subscription Agreement):</b> Governs the investor buying NEW shares from the company (money goes to the company).</li>
+<li><b>SPA (Share Purchase Agreement):</b> Governs an investor buying EXISTING shares from a current shareholder (money goes to the seller, not the company).</li>
+</ul></div>
+<div class="con-box"><div class="box-label">📋 Key Clauses</div>
+<ul class="blist">
+<li><b>Representations & Warranties:</b> Founder promises that everything said about the company is true. Breach = indemnity obligation (financial compensation to the investor).</li>
+<li><b>Covenants:</b> Forward-looking promises ("We will maintain compliance going forward").</li>
+<li><b>CPs (Conditions Precedent):</b> Mandatory checklist BEFORE money is wired — often includes corporate cleanup, regulatory filings, amending AOA.</li>
+<li><b>CSs (Conditions Subsequent):</b> Checklist to complete after funding within a defined timeframe.</li>
+</ul></div>
+<div class="tip-box"><div class="box-label">💡 Pro Tip for SHA Drafting</div><p class="box-text">Always include numerical examples in the SHA annexures for complex formulas (like anti-dilution calculations). Future lawyers and founders will thank you — vague language causes expensive legal disputes.</p></div>
+`},
+{title:"IP Protection — The 4 Types",content:`
+<p class="intro">Your ideas, brand, and code are your most valuable assets. Protecting intellectual property from Day 1 is critical. Investors will walk away if your IP isn't clean and registered.</p>
+<table class="dtable"><thead><tr><th>IP Type</th><th>Protects What</th><th>Duration</th><th>Key Action</th></tr></thead>
+<tbody>
+<tr><td><b>Trademark</b></td><td>Brand identity — name, logo, tagline, distinctive colors</td><td>10 years (renewable)</td><td>Run a public search first, file early, renew every 10 years</td></tr>
+<tr><td><b>Copyright</b></td><td>Creative expression — code, UI/UX, website content, writing</td><td>Life of creator + 60 years</td><td>Automatic on creation, but MUST get IP assignment from all employees/contractors</td></tr>
+<tr><td><b>Patent</b></td><td>Novel, inventive, industrially applicable inventions</td><td>20 years</td><td>Pure algorithms NOT patentable in India. File provisional patent early to claim priority date.</td></tr>
+<tr><td><b>Design</b></td><td>Visual aesthetics — shape, pattern, packaging</td><td>10 years (renewable)</td><td>Crucial for consumer hardware, wearables, retail products</td></tr>
+</tbody></table>
+<div class="warn-box"><div class="box-label">⚠️ The Employee IP Trap</div><p class="box-text">Code written by employees or contractors technically belongs to <b>them</b> unless you have an IP Assignment clause in their employment/service contract. This is a major due diligence red flag. Fix it on Day 1.</p></div>
+`},
+{title:"Contracts & Legal Risk Management",content:`
+<p class="intro">Contracts are the backbone of every business relationship. Poorly written contracts are a startup's silent killers — they surface during due diligence.</p>
+<div class="con-box"><div class="box-label">📋 Key Contract Types</div>
+<ul class="blist">
+<li><b>Vendor Contracts:</b> Define service standards, payment timelines, liability caps clearly. Never agree to unlimited liability.</li>
+<li><b>NDAs:</b> Explicitly define what "confidential information" means and specify the survival period (typically 2–5 years after the agreement ends).</li>
+<li><b>Employment Agreements:</b> Must include IP Assignment, Confidentiality, and Non-Solicitation clauses. Note: Non-compete clauses are largely unenforceable in India.</li>
+<li><b>Customer Contracts:</b> Scope of work, payment schedule, limitation of liability, dispute resolution (prefer Arbitration over courts — faster and private).</li>
+</ul></div>
+`},
+{title:"Labour Law Compliance for Startups",content:`
+<p class="intro">Labour compliance is often ignored by early startups — and becomes a massive due diligence issue when raising institutional money.</p>
+<div class="con-box"><div class="box-label">📋 Current Core Compliances</div>
+<ul class="blist">
+<li><b>Shops & Establishments Act:</b> State-specific. Mandatory for ALL commercial offices (even home offices and co-working spaces). Governs work hours, leave, weekly offs.</li>
+<li><b>Payment of Gratuity Act:</b> Kicks in when you reach <b>10 employees</b>. Gratuity is payable to any employee completing 5 years of continuous service. This is a liability you must account for.</li>
+<li><b>POSH Act (Prevention of Sexual Harassment):</b> Mandatory for ALL companies, even with just 1 employee. If you have 10+ employees, you MUST form an Internal Committee (IC) with an external member.</li>
+<li><b>PF (Provident Fund) & ESIC:</b> Mandatory above certain headcounts/salary thresholds. Usually integrated during incorporation.</li>
+</ul></div>
+<div class="tip-box"><div class="box-label">🔮 Future Labour Codes</div><p class="box-text">India is consolidating all labour laws into 4 codes: Code on Wages, Industrial Relations Code, Social Security Code, and Occupational Safety Code. These will bring digital compliance, uniform definitions, and greater formalization. Stay updated!</p></div>
+`}
+]}
+];
+
+let currentMod = 0;
+
+function toggleSB(){
+  const sb = document.getElementById('sb');
+  const btn = document.getElementById('mBtn');
+  sb.classList.toggle('open');
+  btn.textContent = sb.classList.contains('open') ? '✕' : '☰';
+}
+
+function buildNav(){
+  const nav = document.getElementById('sbNav');
+  nav.innerHTML = MODULES.map((m,i)=>`
+    <div class="nav-item ${i===0?'active':''}" onclick="showModule(${i})" id="nav-${i}">
+      <span class="nav-em">${m.emoji}</span>
+      <span class="nav-tx">
+        <span class="nb">Module ${m.id}</span>
+        <span class="nt">${m.title}</span>
+      </span>
+    </div>
+  `).join('');
+}
+
+function showModule(idx){
+  currentMod = idx;
+  document.querySelectorAll('.nav-item').forEach((el,i)=>{
+    el.classList.toggle('active', i===idx);
+  });
+  const pct = Math.round(((idx+1)/MODULES.length)*100);
+  document.getElementById('progFill').style.width = pct+'%';
+  renderModule(idx);
+  window.scrollTo(0,0);
+  const sb = document.getElementById('sb');
+  if(sb.classList.contains('open')) toggleSB();
+}
+
+function toggleSection(el){
+  const body = el.nextElementSibling;
+  const arr = el.querySelector('.acc-arr');
+  const isOpen = body.classList.contains('open');
+  el.classList.toggle('open',!isOpen);
+  body.classList.toggle('open',!isOpen);
+  arr.classList.toggle('open',!isOpen);
+}
+
+function renderModule(idx){
+  const m = MODULES[idx];
+  const main = document.getElementById('mainArea');
+  const secHtml = m.sections.map((s,si)=>`
+    <div class="acc">
+      <div class="acc-hd ${si===0?'open':''}" onclick="toggleSection(this)">
+        <span class="acc-title">${s.title}</span>
+        <span class="acc-arr ${si===0?'open':''}">▼</span>
+      </div>
+      <div class="acc-body ${si===0?'open':''}">${s.content}</div>
+    </div>
+  `).join('');
+  
+  const qr = getQuickReview(idx);
+  
+  main.innerHTML = `
+    <div class="mod-head">
+      <div class="mod-tag">${m.emoji} Module ${m.id}</div>
+      <h2>${m.title}</h2>
+      <p class="sub">${m.subtitle}</p>
+    </div>
+    ${secHtml}
+    <div class="qr">
+      <h4>⚡ Quick Revision Snapshot</h4>
+      <ul>${qr.map(r=>`<li>${r}</li>`).join('')}</ul>
+    </div>
+    <div style="height:48px;"></div>
+  `;
+}
+
+function getQuickReview(idx){
+  const reviews = [
+    ["Motive shapes strategy: Profit/ROI → VC; Lifestyle → bootstrap","Equity = Cash Flow Rights + Control Rights (no guaranteed returns!)","3 Fs are risky: no discipline, no mentorship, cap table clutter","VC sweet spot: High novelty + Low-to-Medium capital (apps, devices, e-commerce)","Net Worth = Share Capital + Reserves; Market Cap = Shares × Market Price","Authorized > Issued > Subscribed > Paid-up Capital","Staged equity funding: 3Fs → Angels → VC → IPO"],
+    ["Early-stage valuation is subjective — driven by investor mood and market trends","P/E = Market Price ÷ EPS; P/B = Market Price ÷ Book Value per share","Use EV/EBITDA for slightly profitable startups; EV/Sales for loss-making ones","Post-Money = Investment ÷ Equity %; Pre-Money = Post-Money − Investment","Dilution reduces % ownership but increases absolute share value","Convertibles: delay valuation fight; convert based on future performance","Raise small amounts early, large amounts later = minimize total dilution"],
+    ["Cash Budget = actual receipts and payments only (ignore accounting distinctions)","Peak Operational Cash Deficit = maximum funding you must raise","Associate capacity: 160hrs ÷ 16hrs per client = 10 clients per associate","Revenue = Clients × ₹25,000; Associates needed = Clients ÷ 10","Total Funding = Peak Deficit + Infra Cost + Technology Investment","Crazy path breaks linear cost model with ₹10Cr one-time tech investment","Always prioritize cash buffer (adequacy) over minimizing dilution"],
+    ["Rich vs King: wealth creation (give control) vs control retention (slower growth)","Term Sheet is NON-BINDING — except Exclusivity and Confidentiality clauses","Staging: installment funding tied to achieving specific milestones","Veto rights (Affirmative Covenants) protect minority investors on key decisions","Drag-Along forces founders to sell; Tag-Along lets investors join founder's sale","Non-Participating LP: choose higher of multiple OR equity %; Participating = both!","Full Ratchet = harsh on founders; Weighted Average = fairer in down rounds"],
+    ["IPO: highest returns, 8-12 months, costs 7-10%, requires RHP (450-500 pages)","Trade Sale: fast (1 month), cheaper, but founder usually exits in 1-2 years","Secondary: early investor sells to later-stage financial investor; founder stays","Buyback: capped at 25% of share capital by Companies Act Section 68","Self-Liquidating: preference shares redeemed from operating cash flows","Private markets are opaque — network continuously to track valuation trends","Securing adequate capital > fighting for minor valuation increments"],
+    ["Hierarchy: Internal Accruals → Debt → Equity (cheapest to most expensive)","Venture Debt: 14-18% bridge financing before equity rounds to minimize dilution","TAM = total global market; SAM = your target slice; SOM = what you can win now","M&A: Physics (fit) + Chemistry (culture) + Maths (valuation) — in that order","Warm introductions have the highest conversion rate for investor outreach","Due Diligence: Commercial DD + Financial DD (normalized P&L) + Legal DD","Deal closed ONLY when cash hits the bank — not when SHA is signed"],
+    ["Private Limited Company is the ONLY structure suitable for VC funding","INC-20A must be filed BEFORE starting business or borrowing — don't skip this!","DPIIT registration unlocks: Convertible Notes, promoter ESOPs, tax holidays","MSME: 45-day payment protection — corporates must clear dues within 45 days","Private Placement needs: 75% special resolution + escrow account + valuation report","ESOPs: minimum 1-year cliff; DPIIT startups can give ESOPs to promoters (10 years)","Unregistered IP = deal killer during due diligence; file trademarks/patents early"],
+    ["VC funds in India = AIFs (SEBI-regulated); Management Fee + 20% Carry","CCPS (Compulsorily Convertible Preference Shares) = standard VC instrument in India","Nominee Directors owe fiduciary duty to the COMPANY, not just their investor","Reserved Matters (Affirmative Covenants) = investor veto on major decisions","IP Assignment clause in all employment agreements is non-negotiable","POSH Act mandatory for ALL companies (even 1 employee); 10+ = Internal Committee","Non-compete clauses largely unenforceable in India; focus on non-solicitation instead"]
+  ];
+  return reviews[idx] || [];
+}
+
+buildNav();
+renderModule(0);
+</script>
+</body>
+</html>
